@@ -1,44 +1,50 @@
-<!-- Define the document type and language -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Set the character set for the document -->
     <meta charset="UTF-8">
-    <!-- Configure viewport for responsive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Set the title of the page -->
-    <title>BBFS Mod ID JSON Generator</title>
+    <title>Mod ID Generator</title>
 </head>
 <body>
-
-    <!-- Main heading for the page -->
-    <h1>BBFS Mod ID JSON Generator</h1>
-    
-    <!-- Description of the page content -->
-    <p>This page contains a button to download the BBFS Mod ID JSON Generator.</p>
-
-    <!-- Button to trigger the download function -->
-    <button onclick="downloadBBFSModIDGenerator()">Download BBFS Mod ID JSON Generator</button>
-
     <script>
-        // Function to handle the download of the JSON Generator
-        function downloadBBFSModIDGenerator() {
-            // Assuming the file is directly accessible
-            const fileUrl = '/downloads/modidgenerator_bbfs.py';
+        // Function to generate the JSON data
+        function generateJSON() {
+            const modName = prompt("What is your mod's name (no spaces or dots, full lowercase)?");
+            const devName = prompt("What is your development name (no spaces or dots, full lowercase)?");
+            const itemCount = parseInt(prompt("How many items will this mod add?"));
 
-            // Creating an anchor element to trigger the download
-            const anchorElement = document.createElement('a');
-            anchorElement.href = fileUrl;
-            anchorElement.download = 'modidgenerator_bbfs.py';
+            if (isNaN(itemCount) || itemCount <= 0) {
+                alert("Invalid input for item count. Please enter a positive integer.");
+                return;
+            }
 
-            // Appending the anchor element to the body and triggering a click event
-            document.body.appendChild(anchorElement);
-            anchorElement.click();
+            const modData = {
+                modName: modName,
+                modDev: devName,
+                items: []
+            };
 
-            // Removing the anchor element from the body after the download is initiated
-            document.body.removeChild(anchorElement);
+            for (let i = 1; i <= itemCount; i++) {
+                const itemType = prompt(`Item ${i}: Is it an accessory (type 1) or a skin (type 2)?`);
+                const imgName = prompt(`Item ${i} PNG name:`);
+                const itemName = prompt(`Item ${i} name:`).toLowerCase().replace(/[\s.]/g, '');
+                const itemId = `net.${devName}.${modName}.${itemName}`;
+
+                modData.items.push({
+                    itemId: itemId,
+                    itemName: itemName,
+                    itemPNG: imgName
+                });
+            }
+
+            const jsonData = JSON.stringify(modData, null, 2);
+            const blob = new Blob([jsonData], { type: "application/json;charset=utf-8" });
+            saveAs(blob, "modData.json");
         }
-    </script>
 
+        // Main script
+        generateJSON();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </body>
 </html>
