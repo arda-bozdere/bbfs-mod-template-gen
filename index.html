@@ -4,48 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod ID Generator</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        label, input, select, button {
-            margin: 10px 0;
-            display: block;
-        }
-
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="form-container">
+    <div class="form-container" id="formContainer">
         <h2>Mod ID Generator</h2>
         <label for="modName">Mod Name (no spaces or dots, full lowercase):</label>
         <input type="text" id="modName">
@@ -59,6 +21,9 @@
         <div id="itemsContainer"></div>
 
         <button onclick="generateAndDownloadJSON()">Generate Mod JSON</button>
+
+        <label for="darkModeToggle">Dark Mode:</label>
+        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
     </div>
 
     <script>
@@ -109,11 +74,13 @@
                 items: []
             };
 
+            const itemsContainer = document.getElementById('itemsContainer');
+            itemsContainer.innerHTML = ''; // Clear existing items before adding new ones
+
             for (let i = 1; i <= itemCount; i++) {
                 addItemFields(i);
             }
 
-            const itemsContainer = document.getElementById('itemsContainer');
             const itemDivs = itemsContainer.getElementsByTagName('div');
 
             for (let i = 0; i < itemDivs.length; i++) {
@@ -137,6 +104,11 @@
             link.href = URL.createObjectURL(blob);
             link.download = "modData.json";
             link.click();
+        }
+
+        function toggleDarkMode() {
+            const formContainer = document.getElementById('formContainer');
+            formContainer.classList.toggle('dark-mode');
         }
     </script>
 </body>
