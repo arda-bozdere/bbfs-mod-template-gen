@@ -1,0 +1,44 @@
+<!-- Define the document type and language -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Set the character set for the document -->
+    <meta charset="UTF-8">
+    <!-- Configure viewport for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Set the title of the page -->
+    <title>BBFS Mod ID JSON Generator</title>
+</head>
+<body>
+
+    <!-- Main heading for the page -->
+    <h1>BBFS Mod ID JSON Generator</h1>
+    
+    <!-- Description of the page content -->
+    <p>This page contains a button to download the BBFS Mod ID JSON Generator.</p>
+
+    <!-- Button to trigger the download function -->
+    <button onclick="downloadBBFSModIDGenerator()">Download BBFS Mod ID JSON Generator</button>
+
+    <script>
+        // Function to handle the download of the JSON Generator
+        function downloadBBFSModIDGenerator() {
+            // Assuming the file is directly accessible
+            const fileUrl = '/downloads/modidgenerator_bbfs.py';
+
+            // Creating an anchor element to trigger the download
+            const anchorElement = document.createElement('a');
+            anchorElement.href = fileUrl;
+            anchorElement.download = 'modidgenerator_bbfs.py';
+
+            // Appending the anchor element to the body and triggering a click event
+            document.body.appendChild(anchorElement);
+            anchorElement.click();
+
+            // Removing the anchor element from the body after the download is initiated
+            document.body.removeChild(anchorElement);
+        }
+    </script>
+
+</body>
+</html>
