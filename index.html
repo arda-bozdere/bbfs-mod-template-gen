@@ -7,8 +7,8 @@
 </head>
 <body>
     <script>
-        // Function to generate the JSON data
-        function generateJSON() {
+        // Function to generate and download the JSON data
+        function generateAndDownloadJSON() {
             const modName = prompt("What is your mod's name (no spaces or dots, full lowercase)?");
             const devName = prompt("What is your development name (no spaces or dots, full lowercase)?");
             const itemCount = parseInt(prompt("How many items will this mod add?"));
@@ -38,13 +38,19 @@
             }
 
             const jsonData = JSON.stringify(modData, null, 2);
+
+            // Create a Blob with the JSON data
             const blob = new Blob([jsonData], { type: "application/json;charset=utf-8" });
-            saveAs(blob, "modData.json");
+
+            // Create a download link and trigger a click to download the file
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "modData.json";
+            link.click();
         }
 
         // Main script
-        generateJSON();
+        generateAndDownloadJSON();
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </body>
 </html>
