@@ -5,28 +5,31 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #333;
+    background-color: #fff; /* White background by default */
+    color: #333; /* Default text color */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.dark-mode {
+    background-color: #333; /* Dark background in dark mode */
+    color: #fff; /* Light text color in dark mode */
 }
 
 .background-container {
-    background-color: #222;
     padding: 20px;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
     transition: background-color 0.3s ease-in-out;
 }
 
 .dark-mode .form-container {
-    background-color: #444;
-    color: #fff;
+    background-color: #333; /* Dark background for form container in dark mode */
 }
 
 label, input, select, button {

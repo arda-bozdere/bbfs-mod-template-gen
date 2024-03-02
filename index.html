@@ -6,7 +6,7 @@
     <title>Mod ID Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-mode">
     <div class="background-container">
         <div class="form-container" id="formContainer">
             <h2>Mod ID Generator</h2>
@@ -25,7 +25,7 @@
             <button onclick="generateAndDownloadJSON()">Generate Mod JSON</button>
 
             <label for="darkModeToggle">Dark Mode:</label>
-            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+            <input type="checkbox" id="darkModeToggle" checked onchange="toggleDarkMode()">
         </div>
     </div>
 
@@ -122,8 +122,14 @@
         }
 
         function toggleDarkMode() {
-            const formContainer = document.getElementById('formContainer');
-            formContainer.classList.toggle('dark-mode');
+            const body = document.body;
+            const darkModeToggle = document.getElementById('darkModeToggle');
+
+            if (darkModeToggle.checked) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
         }
     </script>
 </body>
