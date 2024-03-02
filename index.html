@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod ID Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        label, input, select, button {
+            margin: 10px 0;
+            display: block;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <div class="form-container">
+        <h2>Mod ID Generator</h2>
         <label for="modName">Mod Name (no spaces or dots, full lowercase):</label>
         <input type="text" id="modName">
 
@@ -19,11 +58,10 @@
 
         <div id="itemsContainer"></div>
 
-        <button onclick="generateAndDownloadJSON()">Confirm and Generate JSON</button>
+        <button onclick="generateAndDownloadJSON()">Generate Mod JSON</button>
     </div>
 
     <script>
-        // Function to dynamically add item input fields
         function addItemFields(itemNumber) {
             const itemsContainer = document.getElementById('itemsContainer');
             const itemDiv = document.createElement('div');
@@ -55,7 +93,6 @@
             itemsContainer.appendChild(itemDiv);
         }
 
-        // Function to generate and download the JSON data
         function generateAndDownloadJSON() {
             const modName = document.getElementById('modName').value;
             const devName = document.getElementById('devName').value;
@@ -94,12 +131,9 @@
             }
 
             const jsonData = JSON.stringify(modData, null, 2);
-
-            // Create a Blob with the JSON data
             const blob = new Blob([jsonData], { type: "application/json;charset=utf-8" });
-
-            // Create a download link and trigger a click to download the file
             const link = document.createElement("a");
+            
             link.href = URL.createObjectURL(blob);
             link.download = "modData.json";
             link.click();
