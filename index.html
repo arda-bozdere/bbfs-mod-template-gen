@@ -4,14 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod ID Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="form-container">
+        <label for="modName">Mod Name (no spaces or dots, full lowercase):</label>
+        <input type="text" id="modName">
+
+        <label for="devName">Development Name (no spaces or dots, full lowercase):</label>
+        <input type="text" id="devName">
+
+        <label for="itemCount">How many items will this mod add?</label>
+        <input type="number" id="itemCount">
+
+        <div id="itemsContainer"></div>
+
+        <button onclick="generateAndDownloadJSON()">Confirm and Generate JSON</button>
+    </div>
+
     <script>
+        // Function to dynamically add item input fields
+        function addItemFields(itemNumber) {
+            const itemsContainer = document.getElementById('itemsContainer');
+            const itemDiv = document.createElement('div');
+
+            const itemTypeLabel = document.createElement('label');
+            itemTypeLabel.textContent = `Item ${itemNumber}: Type`;
+            itemDiv.appendChild(itemTypeLabel);
+
+            const itemTypeSelect = document.createElement('select');
+            itemTypeSelect.innerHTML = '<option value="1">Accessory</option><option value="2">Skin</option>';
+            itemDiv.appendChild(itemTypeSelect);
+
+            const imgNameLabel = document.createElement('label');
+            imgNameLabel.textContent = `Item ${itemNumber} PNG name:`;
+            itemDiv.appendChild(imgNameLabel);
+
+            const imgNameInput = document.createElement('input');
+            imgNameInput.type = 'text';
+            itemDiv.appendChild(imgNameInput);
+
+            const itemNameLabel = document.createElement('label');
+            itemNameLabel.textContent = `Item ${itemNumber} name:`;
+            itemDiv.appendChild(itemNameLabel);
+
+            const itemNameInput = document.createElement('input');
+            itemNameInput.type = 'text';
+            itemDiv.appendChild(itemNameInput);
+
+            itemsContainer.appendChild(itemDiv);
+        }
+
         // Function to generate and download the JSON data
         function generateAndDownloadJSON() {
-            const modName = prompt("What is your mod's name (no spaces or dots, full lowercase)?");
-            const devName = prompt("What is your development name (no spaces or dots, full lowercase)?");
-            const itemCount = parseInt(prompt("How many items will this mod add?"));
+            const modName = document.getElementById('modName').value;
+            const devName = document.getElementById('devName').value;
+            const itemCount = parseInt(document.getElementById('itemCount').value);
 
             if (isNaN(itemCount) || itemCount <= 0) {
                 alert("Invalid input for item count. Please enter a positive integer.");
@@ -25,12 +73,20 @@
             };
 
             for (let i = 1; i <= itemCount; i++) {
-                const itemType = prompt(`Item ${i}: Is it an accessory (type 1) or a skin (type 2)?`);
-                const imgName = prompt(`Item ${i} PNG name:`);
-                const itemName = prompt(`Item ${i} name:`).toLowerCase().replace(/[\s.]/g, '');
+                addItemFields(i);
+            }
+
+            const itemsContainer = document.getElementById('itemsContainer');
+            const itemDivs = itemsContainer.getElementsByTagName('div');
+
+            for (let i = 0; i < itemDivs.length; i++) {
+                const itemType = itemDivs[i].getElementsByTagName('select')[0].value;
+                const imgName = itemDivs[i].getElementsByTagName('input')[0].value;
+                const itemName = itemDivs[i].getElementsByTagName('input')[1].value.toLowerCase().replace(/[\s.]/g, '');
                 const itemId = `net.${devName}.${modName}.${itemName}`;
 
                 modData.items.push({
+                    itemType: itemType,
                     itemId: itemId,
                     itemName: itemName,
                     itemPNG: imgName
@@ -48,9 +104,6 @@
             link.download = "modData.json";
             link.click();
         }
-
-        // Main script
-        generateAndDownloadJSON();
     </script>
 </body>
 </html>
