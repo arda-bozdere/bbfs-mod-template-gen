@@ -6,7 +6,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #b2b2b2; /* White background by default */
-    color: #a6a6a6; /* Default text color */
+    color: #000000; /* Default text color */
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
@@ -48,7 +48,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #277b2b;
 }
 
 #darkModeToggle {
